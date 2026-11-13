@@ -343,7 +343,7 @@
   .pas{position:absolute;left:0;right:0;height:31%;}
   .cel{
     position:absolute;bottom:3px;left:0;
-    width:clamp(76px,14vw,106px);
+    width:clamp(84px,15vw,118px);
     background:none;border:none;padding:0;box-shadow:none;cursor:inherit;
     animation:patrol var(--tempo,6s) linear infinite alternate;
     animation-delay:var(--opoznienie,0s);
@@ -363,18 +363,20 @@
   }
   .cel .fot.brak{aspect-ratio:3/4;}
   .cel img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;}
+  /* policyjna tabliczka na dole kadru - twarz zostaje odsloniEta */
   .cel .pasek-policyjny{
-    position:absolute;left:0;right:0;top:0;height:22%;
-    background:linear-gradient(180deg,#16294f 70%,rgba(22,41,79,0) 100%);
-  }
-  .cel .pasek-policyjny::before{
-    content:"★";position:absolute;left:6%;top:6%;
-    color:var(--gold);font-size:clamp(9px,1.6vw,13px);line-height:1;
+    position:absolute;left:0;right:0;bottom:0;height:17%;
+    background:linear-gradient(0deg,#16294f 62%,rgba(22,41,79,.72) 88%,rgba(22,41,79,0) 100%);
   }
   .cel .pasek-policyjny::after{
-    content:"";position:absolute;left:0;right:0;top:62%;height:16%;
+    content:"";position:absolute;left:0;right:0;bottom:0;height:34%;
     background:repeating-linear-gradient(90deg,#fff 0 7%,#16294f 7% 14%);
-    opacity:.85;
+    opacity:.9;
+  }
+  .cel .fot::before{
+    content:"★";position:absolute;left:5%;top:3%;z-index:2;
+    color:var(--gold);font-size:clamp(10px,1.8vw,14px);line-height:1;
+    text-shadow:0 1px 3px rgba(0,0,0,.9);
   }
   .cel.trafiony{
     animation:none;
