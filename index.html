@@ -952,7 +952,7 @@
   }
 
   /* ---------- dzwiek wystrzalu (syntezowany, zero plikow) ---------- */
-  var ac = null, szum = null;
+  var ac = null, szum = null, trzask = null;
 
   function kontekst(){
     try {
@@ -964,42 +964,66 @@
     } catch (e) { return null; }
   }
 
+  function buforSzumu(a, sekundy, opadanie){
+    var dlugosc = Math.floor(a.sampleRate * sekundy);
+    var buf = a.createBuffer(1, dlugosc, a.sampleRate);
+    var dane = buf.getChannelData(0);
+    for (var i = 0; i < dlugosc; i++){
+      dane[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / dlugosc, opadanie);
+    }
+    return buf;
+  }
+
+  /* Huk ze strzelby: szeroki, niski i dlugi. Trzy warstwy -
+     sucha detonacja, dudniacy ogon i niskie kopniecie w piers. */
   function dzwiekStrzalu(){
     var a = kontekst();
     if (!a) return;
     var t = a.currentTime;
 
-    /* trzask: szum bialy z szybko opadajaca obwiednia */
-    if (!szum){
-      var dlugosc = Math.floor(a.sampleRate * 0.3);
-      szum = a.createBuffer(1, dlugosc, a.sampleRate);
-      var dane = szum.getChannelData(0);
-      for (var i = 0; i < dlugosc; i++){
-        dane[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / dlugosc, 3.2);
-      }
-    }
-    var zrodlo = a.createBufferSource();
-    zrodlo.buffer = szum;
-    var filtr = a.createBiquadFilter();
-    filtr.type = "lowpass";
-    filtr.frequency.setValueAtTime(3400, t);
-    filtr.frequency.exponentialRampToValueAtTime(360, t + 0.22);
-    var wzmak = a.createGain();
-    wzmak.gain.setValueAtTime(0.5, t);
-    wzmak.gain.exponentialRampToValueAtTime(0.0008, t + 0.26);
-    zrodlo.connect(filtr); filtr.connect(wzmak); wzmak.connect(a.destination);
-    zrodlo.start(t); zrodlo.stop(t + 0.3);
+    var suma = a.createGain();
+    suma.gain.value = 0.45;              /* zapas przed przesterem */
+    suma.connect(a.destination);
 
-    /* kopniecie: krotki zjazd niskiego tonu */
+    if (!szum){ szum = buforSzumu(a, 1.0, 1.35); }
+    if (!trzask){ trzask = buforSzumu(a, 0.12, 5.5); }
+
+    /* 1. detonacja - krotki, jasny trzask */
+    var z1 = a.createBufferSource();
+    z1.buffer = trzask;
+    var hp = a.createBiquadFilter();
+    hp.type = "highpass";
+    hp.frequency.value = 1100;
+    var g1 = a.createGain();
+    g1.gain.setValueAtTime(0.7, t);
+    g1.gain.exponentialRampToValueAtTime(0.0008, t + 0.1);
+    z1.connect(hp); hp.connect(g1); g1.connect(suma);
+    z1.start(t); z1.stop(t + 0.13);
+
+    /* 2. ogon - szum przez filtr zjezdzajacy w dol, dlugo */
+    var z2 = a.createBufferSource();
+    z2.buffer = szum;
+    var lp = a.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.setValueAtTime(2400, t);
+    lp.frequency.exponentialRampToValueAtTime(165, t + 0.6);
+    lp.Q.value = 1.1;
+    var g2 = a.createGain();
+    g2.gain.setValueAtTime(0.95, t);
+    g2.gain.exponentialRampToValueAtTime(0.0008, t + 0.9);
+    z2.connect(lp); lp.connect(g2); g2.connect(suma);
+    z2.start(t); z2.stop(t + 1.0);
+
+    /* 3. kopniecie - niski ton zjezdzajacy prawie do zera */
     var osc = a.createOscillator();
     osc.type = "sine";
-    osc.frequency.setValueAtTime(150, t);
-    osc.frequency.exponentialRampToValueAtTime(44, t + 0.11);
-    var wzmak2 = a.createGain();
-    wzmak2.gain.setValueAtTime(0.45, t);
-    wzmak2.gain.exponentialRampToValueAtTime(0.0008, t + 0.14);
-    osc.connect(wzmak2); wzmak2.connect(a.destination);
-    osc.start(t); osc.stop(t + 0.16);
+    osc.frequency.setValueAtTime(105, t);
+    osc.frequency.exponentialRampToValueAtTime(31, t + 0.22);
+    var g3 = a.createGain();
+    g3.gain.setValueAtTime(0.9, t);
+    g3.gain.exponentialRampToValueAtTime(0.0008, t + 0.3);
+    osc.connect(g3); g3.connect(suma);
+    osc.start(t); osc.stop(t + 0.32);
   }
 
   /* ---------- strzelnica: jedna runda, wszyscy ---------- */
