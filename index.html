@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WAJS CITY</title>
-<meta name="description" content="Cztery misje, cztery kupony do odblokowania.">
+<meta name="description" content="Cztery etapy do przejścia.">
 <meta property="og:title" content="WAJS CITY">
-<meta property="og:description" content="Cztery misje, cztery kupony, 350 zł do odbioru.">
+<meta property="og:description" content="Cztery etapy. Każdy zamknięty na jedną odpowiedź.">
 <meta property="og:image" content="https://mikub97.github.io/wajs-city/assets/anton.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -277,11 +277,11 @@
     60%{transform:scale(1.5) rotate(10deg);}
     100%{transform:scale(1) rotate(0);}
   }
-  .kasa{
+  .etap-info{
     margin-left:auto;
-    font-family:Anton,Impact,sans-serif;
-    font-size:clamp(15px,3vw,24px);letter-spacing:.04em;
-    color:#8bff9d;text-shadow:0 0 18px rgba(139,255,157,.4);
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(12px,2.4vw,16px);letter-spacing:.24em;
+    color:var(--paper);opacity:.8;text-transform:uppercase;
   }
   body{padding-top:52px;}
   @media (max-width:480px){ body{padding-top:76px;} }
@@ -290,12 +290,6 @@
   .misja{position:relative;transition:opacity .3s;}
   .misja .naglowek{display:flex;align-items:baseline;gap:10px 14px;flex-wrap:wrap;}
   .misja .naglowek .kicker{margin-bottom:0;}
-  .misja .stawka{
-    margin-left:auto;
-    font-family:Anton,Impact,sans-serif;
-    font-size:clamp(17px,3.2vw,26px);color:var(--gold);
-    text-shadow:0 0 16px rgba(255,210,63,.45);
-  }
   .misja.zamknieta > :not(.zamek){opacity:.18;pointer-events:none;filter:blur(1.5px);}
   .zamek{
     position:absolute;inset:0;display:flex;flex-direction:column;
@@ -338,7 +332,7 @@
     border:2px solid rgba(255,255,255,.2);border-radius:12px;
     background:
       linear-gradient(180deg,#1b0c33 0%,#3a1457 46%,#120722 46%,#0b0418 100%);
-    height:clamp(320px,52vw,440px);
+    height:clamp(360px,58vw,480px);
     cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cg fill='none' stroke='%23ff2d95' stroke-width='2'%3E%3Ccircle cx='17' cy='17' r='11'/%3E%3Cpath d='M17 1v9M17 24v9M1 17h9M24 17h9'/%3E%3C/g%3E%3Ccircle cx='17' cy='17' r='1.6' fill='%23ff2d95'/%3E%3C/svg%3E") 17 17, crosshair;
     user-select:none;
   }
@@ -346,35 +340,45 @@
     content:"";position:absolute;left:0;right:0;top:46%;height:2px;
     background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5;
   }
-  .pas{position:absolute;left:0;right:0;height:47%;}
-  .pas.gora{top:1%;}
-  .pas.dol{top:52%;}
-  .glina{
-    position:absolute;bottom:2px;left:0;
-    width:clamp(78px,16vw,112px);
-    display:flex;flex-direction:column;align-items:center;gap:3px;
+  .pas{position:absolute;left:0;right:0;height:31%;}
+  .cel{
+    position:absolute;bottom:3px;left:0;
+    width:clamp(76px,14vw,106px);
     background:none;border:none;padding:0;box-shadow:none;cursor:inherit;
     animation:patrol var(--tempo,6s) linear infinite alternate;
     animation-delay:var(--opoznienie,0s);
-    transition:transform .35s,opacity .35s;
+    transition:transform .4s,opacity .4s;
   }
-  .glina:hover{transform:none;}
-  .glina:focus-visible{outline:3px solid var(--cyan);outline-offset:4px;border-radius:8px;}
+  .cel:hover{transform:none;}
+  .cel:focus-visible{outline:3px solid var(--cyan);outline-offset:4px;border-radius:10px;}
   @keyframes patrol{
     from{left:0;transform:translateX(0);}
     to{left:100%;transform:translateX(-100%);}
   }
-  .glina svg{display:block;width:auto;height:clamp(88px,15vw,122px);filter:drop-shadow(0 4px 10px rgba(0,0,0,.6));}
-  .glina .tabliczka{
-    font-family:system-ui,sans-serif;font-weight:700;
-    font-size:clamp(10px,1.9vw,13px);line-height:1.15;
-    background:#fff;color:#14051f;border-radius:4px;
-    padding:3px 5px;text-align:center;width:100%;
-    box-shadow:0 3px 8px rgba(0,0,0,.5);word-break:break-word;
+  .cel .fot{
+    position:relative;display:block;overflow:hidden;
+    border:3px solid #1d3a73;border-radius:9px;
+    box-shadow:0 7px 16px rgba(0,0,0,.65);
+    background:#1d3a73;
   }
-  .glina.trafiony{
+  .cel .fot.brak{aspect-ratio:3/4;}
+  .cel img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;}
+  .cel .pasek-policyjny{
+    position:absolute;left:0;right:0;top:0;height:22%;
+    background:linear-gradient(180deg,#16294f 70%,rgba(22,41,79,0) 100%);
+  }
+  .cel .pasek-policyjny::before{
+    content:"★";position:absolute;left:6%;top:6%;
+    color:var(--gold);font-size:clamp(9px,1.6vw,13px);line-height:1;
+  }
+  .cel .pasek-policyjny::after{
+    content:"";position:absolute;left:0;right:0;top:62%;height:16%;
+    background:repeating-linear-gradient(90deg,#fff 0 7%,#16294f 7% 14%);
+    opacity:.85;
+  }
+  .cel.trafiony{
     animation:none;
-    transform:rotate(80deg) translateY(26px);
+    transform:rotate(82deg) translateY(30px);
     opacity:0;pointer-events:none;
   }
   .dziura{
@@ -410,6 +414,136 @@
     background:linear-gradient(175deg,#fff 6%,var(--gold) 46%,var(--pink) 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
+
+  /* ---------- ekrany ---------- */
+  .ekran{display:none;}
+  .ekran.on{display:block;animation:wejscie .34s ease-out;}
+  @keyframes wejscie{
+    from{opacity:0;transform:translateY(16px);}
+    to{opacity:1;transform:none;}
+  }
+  .nawigacja{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 10px;}
+  button.wstecz{
+    background:none;border:1px solid rgba(255,255,255,.28);
+    box-shadow:none;color:var(--paper);
+    font-size:clamp(14px,2.2vw,17px);padding:12px 20px;
+  }
+  button.wstecz:hover{border-color:var(--cyan);transform:none;}
+  button.wstecz:active{transform:translateY(2px);box-shadow:none;}
+  button.dalej{
+    margin-left:auto;
+    background:linear-gradient(180deg,var(--gold) 0%,#e09400 100%);
+    box-shadow:0 6px 0 #8a5a00;color:#2b1505;
+  }
+  button.dalej:active{box-shadow:0 2px 0 #8a5a00;}
+  #zaczynamy{font-size:clamp(20px,3.4vw,26px);padding:16px 34px;}
+
+  /* ============ UI w stylu GTA ============ */
+
+  /* HUD: gwiazdki w prawym gornym rogu, jak poziom poszukiwania */
+  .hud{
+    background:none;border:none;backdrop-filter:none;
+    padding:10px clamp(10px,2.5vw,20px);
+    justify-content:flex-end;gap:10px;pointer-events:none;
+  }
+  .hud-label{
+    font-size:clamp(10px,1.8vw,12px);letter-spacing:.3em;
+    color:rgba(255,255,255,.55);text-shadow:0 2px 4px #000;
+  }
+  .gwiazdki i{
+    color:transparent;
+    -webkit-text-stroke:1.5px rgba(255,255,255,.45);
+    text-shadow:0 2px 5px rgba(0,0,0,.8);
+    font-size:clamp(19px,3.6vw,27px);
+  }
+  .gwiazdki i.on{
+    color:var(--gold);
+    -webkit-text-stroke:1.5px #6b4a00;
+    text-shadow:0 0 14px rgba(255,210,63,.8),0 2px 5px rgba(0,0,0,.8);
+  }
+  .etap-info{
+    order:-1;margin-left:0;margin-right:auto;
+    color:rgba(255,255,255,.7);text-shadow:0 2px 4px #000;
+  }
+
+  /* radar z lewego dolnego rogu */
+  .radar{
+    position:fixed;left:clamp(10px,2.5vw,22px);bottom:clamp(10px,2.5vw,22px);
+    width:clamp(84px,13vw,116px);aspect-ratio:1;z-index:35;
+    pointer-events:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.7));
+  }
+  .radar svg{width:100%;height:100%;display:block;}
+  .radar .blip-aktywny{animation:pulsuj 1.4s ease-in-out infinite;}
+  @keyframes pulsuj{50%{opacity:.35;}}
+
+  /* panel misji jak briefing */
+  .card.misja{
+    border-left:4px solid var(--gold);
+    background:rgba(8,4,18,.86);
+  }
+  .card.misja .kicker{color:var(--gold);}
+  .card.misja.zaliczona{border-left-color:#8bff9d;}
+  .question{
+    background:rgba(0,0,0,.42);
+    border-left:3px solid var(--cyan);
+    padding:12px 14px;border-radius:0 8px 8px 0;
+  }
+
+  /* menu startowe */
+  .menu-start{
+    display:flex;flex-direction:column;gap:10px;margin-top:4px;
+  }
+  #zaczynamy{
+    font-size:clamp(20px,3.6vw,28px);padding:16px 34px;
+    letter-spacing:.08em;
+    animation:oddech 2.4s ease-in-out infinite;
+  }
+  @keyframes oddech{50%{filter:brightness(1.18);}}
+
+  /* MISSION PASSED */
+  #passed{
+    position:fixed;inset:0;z-index:55;display:grid;place-items:center;
+    background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .25s;
+    text-align:center;padding:16px;
+  }
+  #passed.on{opacity:1;}
+  #passed .tytul{
+    font-family:Anton,Impact,sans-serif;
+    font-size:clamp(34px,9vw,96px);line-height:.92;
+    text-transform:uppercase;transform:skewX(-7deg) scale(.88);
+    background:linear-gradient(178deg,#fff 4%,var(--gold) 46%,#ff9a00 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(255,210,63,.55);
+    transition:transform .5s cubic-bezier(.2,1.4,.4,1);
+  }
+  #passed.on .tytul{transform:skewX(-7deg) scale(1);}
+  #passed .podtytul{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(14px,3vw,24px);letter-spacing:.3em;
+    color:#8bff9d;text-shadow:0 2px 8px #000;margin-top:6px;
+  }
+
+  /* amunicja jak w HUD-zie broni */
+  .pasek-rundy{
+    background:rgba(0,0,0,.4);border-radius:8px;
+    padding:8px 12px;margin-bottom:10px;
+  }
+  .amunicja i{height:19px;width:6px;border-radius:1px;}
+
+  @media (max-width:560px){
+    .radar{width:76px;left:8px;bottom:8px;}
+  }
+
+  /* ekran gry wypelnia okno, stopka trzyma sie dolu */
+  body{display:flex;flex-direction:column;min-height:100vh;}
+  #ekrany{flex:1 0 auto;width:100%;}
+  .ekran.on{
+    display:flex;flex-direction:column;justify-content:center;
+    min-height:calc(100vh - 170px);
+  }
+  #ekran-0.on{justify-content:flex-start;}
+  .menu-start{align-items:flex-start;}
+  #zaczynamy{align-self:flex-start;}
 </style>
 </head>
 <body>
@@ -418,57 +552,52 @@
 <div class="hud">
   <span class="hud-label">Wanted</span>
   <span class="gwiazdki" id="gwiazdki" role="img" aria-label="Poziom poszukiwania"></span>
-  <span class="kasa" id="kasa">0 / 350 zł</span>
+  <span class="etap-info" id="etap-info"></span>
 </div>
 
-<div class="wrap">
+<div class="wrap" id="ekrany">
 
-  <section class="collage" aria-label="Kolaż urodzinowy">
-    <figure class="panel p-anton"><img src="assets/anton.jpg" alt="Anton w aucie, w dłoni replika broni, obok Michał" loading="eager"><figcaption class="tag">Anton</figcaption></figure>
-    <figure class="panel p-tommy"><img src="assets/tommy.jpg" alt="Michał w białym polo, aviatorach i czapce, parasole w tle" loading="eager"><figcaption class="tag">Wspólnik</figcaption></figure>
-    <figure class="panel p-bday"><img src="assets/urodziny.jpg" alt="Selfie w opasce Happy Birthday w sklepie z dekoracjami" loading="lazy"><figcaption class="tag">Urodziny</figcaption></figure>
-    <figure class="panel p-vice"><img src="assets/vice-city.jpg" alt="Grafika w stylu GTA Vice City" loading="lazy"><figcaption class="tag">Vice</figcaption></figure>
-    <div class="panel p-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-    <div class="panel p-logo">
-      <div class="logo">Wajs&nbsp;City</div>
-      <div class="logo-sub">Anton &middot; 2026</div>
+  <section class="ekran on" id="ekran-0">
+    <div class="collage" aria-label="Kolaż">
+      <figure class="panel p-anton"><img src="assets/anton.jpg" alt="Anton w aucie, w dłoni replika broni" loading="eager"><figcaption class="tag">Dziki Antonowiec</figcaption></figure>
+      <figure class="panel p-tommy"><img src="assets/tommy.jpg" alt="Postać w białym polo, aviatorach i czapce" loading="eager"><figcaption class="tag">Informator</figcaption></figure>
+      <figure class="panel p-bday"><img src="assets/urodziny.jpg" alt="Selfie w opasce Happy Birthday" loading="lazy"><figcaption class="tag">Wspólnik</figcaption></figure>
+      <figure class="panel p-vice"><img src="assets/vice-city.jpg" alt="Grafika w stylu GTA Vice City" loading="lazy"><figcaption class="tag">Gąska</figcaption></figure>
+      <div class="panel p-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="panel p-logo">
+        <div class="logo">Wajs&nbsp;City</div>
+        <div class="logo-sub">Anton &middot; 2026</div>
+      </div>
     </div>
+
+    <section class="card prose">
+      <p class="kicker">Zasady</p>
+      <h2>Robota</h2>
+      <ul class="zasady">
+        <li><strong>Cztery etapy,</strong> jeden po drugim, każdy na osobnym ekranie.</li>
+        <li><strong>Każdy zamknięty na jedną odpowiedź.</strong> Dobra odsłania kupon i otwiera następny etap.</li>
+        <li><strong>Prób bez limitu.</strong> Wielkość liter, spacje i przecinki nie mają znaczenia.</li>
+        <li><strong>Pudło to WASTED.</strong> Nic poza tym — wracasz i próbujesz dalej.</li>
+      </ul>
+      <p class="quiet">Następnego etapu nie ma w kodzie tej strony. Przyjeżdża zaszyfrowany razem
+        z kuponem i rozpakowuje się dopiero po dobrej odpowiedzi, więc zaglądanie w źródło nic nie da.</p>
+      <div class="menu-start">
+        <button type="button" id="zaczynamy">Zaczynamy →</button>
+      </div>
+    </section>
   </section>
 
-  <section class="card prose">
-    <p class="kicker">Zasady</p>
-    <h2>Robota</h2>
-    <ul class="zasady">
-      <li><strong>Cztery misje.</strong> Każda zamknięta na jedną odpowiedź.</li>
-      <li><strong>Za zaliczoną misję: gwiazdka i kupon PlayStation.</strong> Razem 350 zł.</li>
-      <li><strong>Po kolei.</strong> Następna misja otwiera się dopiero po poprzedniej.</li>
-      <li><strong>Prób bez limitu.</strong> Wielkość liter, spacje i przecinki nie mają znaczenia.</li>
-      <li><strong>Pudło to WASTED.</strong> Nic poza tym — wracasz i próbujesz dalej.</li>
-    </ul>
-    <p class="quiet">Kupony leżą tu zaszyfrowane, a strona nie zna odpowiedzi — sprawdza je dopiero
-      przy odszyfrowaniu. Zaglądanie w kod nic nie da.</p>
-  </section>
+</div>
 
-  <div id="misje"></div>
+<footer>Wajs City</footer>
 
+<div class="radar" id="radar" aria-hidden="true"></div>
 
-  <section class="card prose">
-    <p class="kicker">Jak zrealizować kody</p>
-    <ol class="howto">
-      <li>Zaloguj się do PSN albo załóż konto na <strong>playstation.com</strong>.</li>
-      <li>Wejdź w <strong>„Wykorzystaj kody"</strong> w PS Store.</li>
-      <li>Wpisz kod z odblokowanej misji — kwota ląduje na koncie.</li>
-      <li>Kody możesz zrealizować pojedynczo, środki się sumują.</li>
-    </ol>
-  </section>
-
-  <section class="card" id="finisz" hidden>
-    <p class="kicker">100% completion</p>
-    <div class="wielkie">No to jazda z Janami!</div>
-    <p class="prose">Cztery misje, cztery gwiazdki, <strong>350 zł</strong> na koncie.</p>
-  </section>
-
-  <footer>Wajs City</footer>
+<div id="passed" aria-hidden="true">
+  <div>
+    <div class="tytul">Mission passed</div>
+    <div class="podtytul">Respect ++</div>
+  </div>
 </div>
 
 <div id="wasted" aria-hidden="true"><span>Wasted</span></div>
@@ -478,92 +607,21 @@
   "use strict";
 
   /* ============================================================
-     KONFIGURACJA MISJI
-     Pytania oznaczone ATRAPA sa do podmiany na wasze wlasne.
-     Po zmianie tresci trzeba przeszyfrowac dany kupon:
-       python3 tools/make_payload.py kupon.pdf KOD /tmp/p.bin
-       python3 tools/encrypt.py /tmp/p.bin assets/poziom-N.enc
-     Strona NIE zna poprawnych odpowiedzi - weryfikuje je tag GCM.
+     W zrodle strony jest TYLKO pierwszy etap. Definicja kazdego
+     kolejnego (pytanie, cele strzelnicy, sciezka do jego paczki,
+     a gdy trzeba - jego klucz) siedzi w zaszyfrowanej paczce etapu
+     poprzedniego. Nie da sie wiec zajrzec dalej bez przejscia.
      ============================================================ */
-  var POZIOMY = [
-    {
-      id: "m1", nr: 1, kryptonim: "Pierwszy telefon", stawka: 100,
-      tytul: "Przywitaj się",
-      typ: "pytanie",
-      pytanie: "jak się witasz, Rumpert?",
-      docinki: ["Rumpert tak się nie wita.", "Nie. Prościej.", "Pudło. Codziennie to mówisz."],
-      placeholder: "wpisz odpowiedź...",
-      przycisk: "Odblokuj",
-      stopka: null,
-      enc: "assets/poziom-1.enc"
-    },
-    {
-      id: "m2", nr: 2, kryptonim: "Trzy litery", stawka: 50,
-      tytul: "Rozwiń skrót",
-      typ: "pytanie",
-      pytanie: "co to jest KKK?",
-      placeholder: "z małych liter...",
-      przycisk: "Odblokuj",
-      stopka: "Małymi literami.",
-      enc: "assets/poziom-2.enc"
-    },
-    {
-      id: "m3", nr: 3, kryptonim: "Pościg", stawka: 100,
-      tytul: "Strzelnica",
-      typ: "strzelnica",
-      intro: "Pięć rund. W każdej patroluje czterech funkcjonariuszy — zestrzel tego właściwego. " +
-             "Nikt ci nie powie, czy trafiłeś: dowiesz się dopiero po piątej rundzie, kiedy kupon się otworzy albo nie.",
-      rundy: [
-        { pytanie: "ATRAPA 1: kto zjadł jogurt?",
-          opcje: [
-            {imie: "Jan I",   foto: "assets/ziomki/1.jpg"},
-            {imie: "Jan II",  foto: "assets/ziomki/2.jpg"},
-            {imie: "Jan III", foto: "assets/ziomki/3.jpg"},
-            {imie: "Jan IV",  foto: "assets/ziomki/4.jpg"}
-          ] },
-        { pytanie: "ATRAPA 2: kto prowadził?",
-          opcje: [
-            {imie: "Jan V",   foto: "assets/ziomki/5.jpg"},
-            {imie: "Jan VI",  foto: "assets/ziomki/6.jpg"},
-            {imie: "Jan VII", foto: "assets/ziomki/7.jpg"},
-            {imie: "Jan I",   foto: "assets/ziomki/1.jpg"}
-          ] },
-        { pytanie: "ATRAPA 3: kto płacił?",
-          opcje: [
-            {imie: "Jan II",  foto: "assets/ziomki/2.jpg"},
-            {imie: "Jan IV",  foto: "assets/ziomki/4.jpg"},
-            {imie: "Jan VI",  foto: "assets/ziomki/6.jpg"},
-            {imie: "Jan VII", foto: "assets/ziomki/7.jpg"}
-          ] },
-        { pytanie: "ATRAPA 4: kto zasnął pierwszy?",
-          opcje: [
-            {imie: "Jan III", foto: "assets/ziomki/3.jpg"},
-            {imie: "Jan V",   foto: "assets/ziomki/5.jpg"},
-            {imie: "Jan I",   foto: "assets/ziomki/1.jpg"},
-            {imie: "Jan IV",  foto: "assets/ziomki/4.jpg"}
-          ] },
-        { pytanie: "ATRAPA 5: kto to wszystko wymyślił?",
-          opcje: [
-            {imie: "Jan VII", foto: "assets/ziomki/7.jpg"},
-            {imie: "Jan II",  foto: "assets/ziomki/2.jpg"},
-            {imie: "Jan V",   foto: "assets/ziomki/5.jpg"},
-            {imie: "Jan VI",  foto: "assets/ziomki/6.jpg"}
-          ] }
-      ],
-      stopka: "ATRAPA — tu wchodzi pięć pytań o ekipę. Hasło = imiona pięciu trafionych, po kolei.",
-      enc: "assets/poziom-3.enc"
-    },
-    {
-      id: "m4", nr: 4, kryptonim: "Ostatni skok", stawka: 100,
-      tytul: "Końcówka",
-      typ: "pytanie",
-      pytanie: "z kim jazda?",
-      placeholder: "wpisz odpowiedź...",
-      przycisk: "Odblokuj",
-      stopka: null,
-      enc: "assets/poziom-4.enc"
-    }
-  ];
+  var ETAP_1 = {
+    id: "e1", nr: 1, kryptonim: "Pierwszy telefon", tytul: "Przywitaj się",
+    typ: "pytanie",
+    pytanie: "jak się witasz, Rumpert?",
+    docinki: ["Rumpert tak się nie wita.", "Nie. Prościej.", "Pudło. Codziennie to mówisz."],
+    placeholder: "wpisz odpowiedź...",
+    przycisk: "Odblokuj",
+    enc: "assets/etap-1.enc"
+  };
+  var ILE_ETAPOW = 4;
 
   var DOCINKI = [
     "Nie. Spróbuj jeszcze raz, gangsterze.",
@@ -575,10 +633,12 @@
 
   var MAGIC = "WAJS1", ITER = 150000, SALT_LEN = 16, IV_LEN = 12;
   var KLUCZ_POSTEPU = "wajs-city-postep";
-  var SUMA = POZIOMY.reduce(function(a, p){ return a + p.stawka; }, 0);
 
-  var zaliczone = {};   /* id -> {kod, plik, url} */
-  var proby = 0;
+  var etapy = [];        /* definicje, w kolejnosci */
+  var ekrany = [];       /* sekcje DOM; ekrany[0] to kolaz */
+  var rozwiazane = {};   /* id -> {kod, plik, url} */
+  var proby = {};        /* id -> licznik pudel */
+  var aktywny = 0;
 
   /* ---------- drobiazgi ---------- */
   function el(tag, cls, txt){
@@ -588,9 +648,8 @@
     return e;
   }
 
-  /* Kanoniczna postac hasla - MUSI byc identyczna z canonical() w tools/encrypt.py.
-     Zostawia wylacznie [a-z0-9], wiec wielkosc liter, spacje, interpunkcja
-     i polskie ogonki nie maja znaczenia. */
+  /* Kanoniczna postac hasla - MUSI byc identyczna z canonical()
+     w tools/zbuduj_lancuch.py. Zostaje wylacznie [a-z0-9]. */
   function normalizuj(s){
     var t = String(s).toLowerCase().replace(/ł/g, "l").normalize("NFD");
     var out = "";
@@ -603,16 +662,15 @@
 
   /* ---------- pamiec postepu ---------- */
   function wczytajPostep(){
-    try {
-      return JSON.parse(localStorage.getItem(KLUCZ_POSTEPU) || "{}") || {};
-    } catch (e) { return {}; }
+    try { return JSON.parse(localStorage.getItem(KLUCZ_POSTEPU) || "{}") || {}; }
+    catch (e) { return {}; }
   }
   function zapiszPostep(id, haslo){
     try {
       var p = wczytajPostep();
       p[id] = haslo;
       localStorage.setItem(KLUCZ_POSTEPU, JSON.stringify(p));
-    } catch (e) { /* tryb prywatny albo zablokowane dane - trudno */ }
+    } catch (e) { /* tryb prywatny - trudno */ }
   }
 
   /* ---------- kryptografia ---------- */
@@ -624,8 +682,9 @@
         return r.arrayBuffer();
       }).then(function(buf){
         var u8 = new Uint8Array(buf);
-        var naglowek = String.fromCharCode.apply(null, u8.subarray(0, MAGIC.length));
-        if (naglowek !== MAGIC) throw new Error("zły format pliku");
+        if (String.fromCharCode.apply(null, u8.subarray(0, MAGIC.length)) !== MAGIC){
+          throw new Error("zły format pliku");
+        }
         return u8;
       }).catch(function(err){ delete pobrane[url]; throw err; });
     }
@@ -637,8 +696,13 @@
     if (nl < 0) throw new Error("uszkodzona paczka");
     var meta = JSON.parse(new TextDecoder().decode(plain.subarray(0, nl)));
     var dane = plain.slice(nl + 1);
-    var blob = new Blob([dane], {type: meta.typ || "application/pdf"});
-    return {kod: meta.kod, plik: meta.plik || "prezent.pdf", url: URL.createObjectURL(blob)};
+    return {
+      kod: meta.kod,
+      plik: meta.plik || "kupon.pdf",
+      nastepny: meta.nastepny || null,
+      finisz: meta.finisz || null,
+      url: URL.createObjectURL(new Blob([dane], {type: meta.typ || "application/pdf"}))
+    };
   }
 
   async function sprobuj(url, raw){
@@ -660,36 +724,76 @@
     }
   }
 
-  /* ---------- HUD ---------- */
-  function odswiezHud(swiezo){
-    var box = document.getElementById("gwiazdki");
-    if (!box.childNodes.length){
-      POZIOMY.forEach(function(){ box.appendChild(el("i", null, "★")); });
-    }
-    var kasa = 0;
-    POZIOMY.forEach(function(p, i){
-      var g = box.childNodes[i];
-      var masz = !!zaliczone[p.id];
-      if (masz){ kasa += p.stawka; }
-      if (masz && !g.classList.contains("on")){
-        g.classList.add("on");
-        if (swiezo === p.id){
-          g.classList.add("swiezo");
-          setTimeout(function(){ g.classList.remove("swiezo"); }, 700);
-        }
-      }
-    });
-    document.getElementById("kasa").textContent = kasa + " / " + SUMA + " zł";
-    var komplet = POZIOMY.every(function(p){ return !!zaliczone[p.id]; });
-    document.getElementById("finisz").hidden = !komplet;
+  /* ---------- ekrany ---------- */
+  function pokazEkran(i){
+    if (i < 0 || i >= ekrany.length) return;
+    aktywny = i;
+    ekrany.forEach(function(e, j){ e.classList.toggle("on", j === i); });
+    odswiezHud();
+    window.scrollTo({top: 0, behavior: "smooth"});
   }
 
-  /* ---------- WASTED / BUSTED ---------- */
-  function overlay(tekst, kartaId){
+  function nawigacja(host, indeksEkranu){
+    var nav = el("div", "nawigacja");
+    var wstecz = el("button", "wstecz", "← Wstecz");
+    wstecz.type = "button";
+    wstecz.addEventListener("click", function(){ pokazEkran(indeksEkranu - 1); });
+    nav.appendChild(wstecz);
+    host.appendChild(nav);
+    return nav;
+  }
+
+  function rysujRadar(){
+    var r = document.getElementById("radar");
+    var blipy = "";
+    /* cztery znaczniki misji dookola gracza: zielony = zrobiony,
+       zolty pulsujacy = biezacy, szary = jeszcze nie */
+    var punkty = [[50,17],[80,45],[52,82],[20,48]];
+    for (var i = 0; i < ILE_ETAPOW; i++){
+      var def = etapy[i];
+      var zrobiony = def && rozwiazane[def.id];
+      var biezacy = (i + 1) === aktywny;
+      var kolor = zrobiony ? "#8bff9d" : (biezacy ? "#ffd23f" : "rgba(255,255,255,.3)");
+      blipy += '<rect x="' + (punkty[i][0] - 4) + '" y="' + (punkty[i][1] - 4) + '" width="8" height="8" rx="1.5" ' +
+               'fill="' + kolor + '" class="' + (biezacy && !zrobiony ? "blip-aktywny" : "") + '"/>';
+    }
+    r.innerHTML =
+      '<svg viewBox="0 0 100 100">' +
+      '<defs><clipPath id="radar-kolo"><circle cx="50" cy="50" r="46"/></clipPath></defs>' +
+      '<g clip-path="url(#radar-kolo)">' +
+        '<rect width="100" height="100" fill="#10233f"/>' +
+        '<rect x="0" y="0" width="100" height="42" fill="#17345c"/>' +
+        '<path d="M0 44h100M0 68h100M30 0v100M68 0v100" stroke="#3b5f8f" stroke-width="5"/>' +
+        '<path d="M0 44h100M0 68h100M30 0v100M68 0v100" stroke="#54809f" stroke-width="1.4"/>' +
+        '<rect x="72" y="72" width="26" height="26" fill="#1c4a3a"/>' +
+        blipy +
+        '<path d="M50 44l6 13h-12z" fill="#fff" stroke="#000" stroke-width="1"/>' +
+      '</g>' +
+      '<circle cx="50" cy="50" r="46" fill="none" stroke="#000" stroke-width="7"/>' +
+      '<circle cx="50" cy="50" r="49" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2"/>' +
+      '</svg>';
+  }
+
+  function odswiezHud(){
+    var box = document.getElementById("gwiazdki");
+    if (!box.childNodes.length){
+      for (var i = 0; i < ILE_ETAPOW; i++){ box.appendChild(el("i", null, "★")); }
+    }
+    etapy.forEach(function(def, i){
+      var g = box.childNodes[i];
+      if (g && rozwiazane[def.id]) { g.classList.add("on"); }
+    });
+    var info = document.getElementById("etap-info");
+    info.textContent = aktywny === 0 ? "" :
+      (aktywny <= etapy.length ? "Etap " + aktywny + " z " + ILE_ETAPOW : "Koniec");
+    rysujRadar();
+  }
+
+  /* ---------- WASTED ---------- */
+  function overlay(tekst, karta){
     var w = document.getElementById("wasted");
     w.querySelector("span").textContent = tekst;
     w.classList.add("on");
-    var karta = kartaId ? document.getElementById(kartaId) : null;
     if (karta){
       karta.classList.remove("shake");
       void karta.offsetWidth;
@@ -699,16 +803,18 @@
   }
 
   /* ---------- nagroda ---------- */
-  function pokazNagrode(p, wynik, cicho){
-    zaliczone[p.id] = wynik;
-    var sec = document.getElementById("misja-" + p.id);
-    sec.classList.add("zaliczona");
+  function pokazNagrode(def, wynik, cicho){
+    rozwiazane[def.id] = wynik;
 
-    var box = sec.querySelector(".nagroda");
+    var ekran = ekrany[def.nr];
+    var karta = ekran.querySelector(".card");
+    karta.classList.add("zaliczona");
+
+    var box = ekran.querySelector(".nagroda");
     box.textContent = "";
     box.hidden = false;
 
-    box.appendChild(el("p", "kicker", "Mission passed · kupon " + p.stawka + " zł"));
+    box.appendChild(el("p", "kicker", "Mission passed · kupon " + def.nr));
     box.appendChild(el("div", "code", wynik.kod));
 
     var akcje = el("div", "actions");
@@ -744,58 +850,69 @@
 
     var ramka = el("div", "pdfbox");
     var ifr = document.createElement("iframe");
-    ifr.title = "Kupon " + p.stawka + " zł";
+    ifr.title = "Kupon " + def.nr;
     ifr.src = wynik.url;
     ramka.appendChild(ifr);
     box.appendChild(ramka);
 
-    var msg = sec.querySelector(".msg");
-    msg.textContent = "Mission passed. Respect +100.";
+    var msg = ekran.querySelector(".msg");
+    msg.textContent = "Mission passed.";
     msg.className = "msg good";
 
-    var naglowek = sec.querySelector(".naglowek");
-    if (!naglowek.querySelector(".plakietka")){
-      naglowek.appendChild(el("span", "plakietka", "✔ zaliczone"));
+    if (!cicho){
+      var plansza = document.getElementById("passed");
+      plansza.classList.add("on");
+      setTimeout(function(){ plansza.classList.remove("on"); }, 1800);
     }
 
-    odswiezHud(cicho ? null : p.id);
-    odswiezZamki();
-    if (!cicho){ sec.scrollIntoView({behavior: "smooth", block: "start"}); }
+    /* kolejny etap przyjechal razem z kuponem */
+    if (wynik.nastepny){ zarejestrujEtap(wynik.nastepny); }
+    else { zbudujFinisz(wynik.finisz); }
+
+    var nav = ekran.querySelector(".nawigacja");
+    if (!nav.querySelector(".dalej")){
+      var dalej = el("button", "dalej", "Dalej →");
+      dalej.type = "button";
+      dalej.addEventListener("click", function(){ pokazEkran(def.nr + 1); });
+      nav.appendChild(dalej);
+    }
+
+    odswiezHud();
+    if (!cicho){ box.scrollIntoView({behavior: "smooth", block: "start"}); }
   }
 
-  /* ---------- wspolny formularz (pytanie / cheat) ---------- */
-  function formularz(p, host){
-    host.appendChild(el("p", "question", p.pytanie));
+  /* ---------- formularz z pytaniem ---------- */
+  function formularz(def, host, ekran){
+    host.appendChild(el("p", "question", def.pytanie));
 
     var form = el("form", "form");
     form.setAttribute("autocomplete", "off");
 
     var label = el("label", null, "Odpowiedź");
-    label.setAttribute("for", "input-" + p.id);
+    label.setAttribute("for", "input-" + def.id);
     label.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);";
     form.appendChild(label);
 
     var inp = document.createElement("input");
     inp.type = "text";
-    inp.id = "input-" + p.id;
-    inp.placeholder = p.placeholder;
-    inp.setAttribute("autocapitalize", p.typ === "cheat" ? "characters" : "none");
+    inp.id = "input-" + def.id;
+    inp.placeholder = def.placeholder || "wpisz odpowiedź...";
+    inp.setAttribute("autocapitalize", "none");
     inp.setAttribute("autocorrect", "off");
     inp.setAttribute("spellcheck", "false");
     inp.setAttribute("enterkeyhint", "go");
-    if (p.typ === "cheat"){ inp.className = "cheat"; }
     form.appendChild(inp);
 
-    var btn = el("button", null, p.przycisk);
+    var btn = el("button", null, def.przycisk || "Odblokuj");
     btn.type = "submit";
     form.appendChild(btn);
     host.appendChild(form);
 
-    var msg = document.getElementById("misja-" + p.id).querySelector(".msg");
+    var msg = ekran.querySelector(".msg");
 
     form.addEventListener("submit", function(ev){
       ev.preventDefault();
-      if (zaliczone[p.id]) return;
+      if (rozwiazane[def.id]) return;
       if (!normalizuj(inp.value)){
         msg.textContent = "Najpierw coś wpisz.";
         msg.className = "msg bad";
@@ -808,24 +925,24 @@
       msg.className = "msg";
 
       setTimeout(function(){
-        sprobuj(p.enc, inp.value).then(function(wynik){
+        sprobuj(def.enc, inp.value).then(function(wynik){
           if (wynik){
-            zapiszPostep(p.id, inp.value);
+            zapiszPostep(def.id, inp.value);
             inp.disabled = true;
             btn.textContent = "Otwarte";
-            pokazNagrode(p, wynik, false);
+            pokazNagrode(def, wynik, false);
           } else {
-            proby++;
-            overlay("Wasted", "misja-" + p.id);
-            var lista = p.docinki || DOCINKI;
-            msg.textContent = lista[(proby - 1) % lista.length] + "  (próba " + proby + ")";
+            proby[def.id] = (proby[def.id] || 0) + 1;
+            overlay("Wasted", ekran.querySelector(".card"));
+            var lista = def.docinki || DOCINKI;
+            msg.textContent = lista[(proby[def.id] - 1) % lista.length] + "  (próba " + proby[def.id] + ")";
             msg.className = "msg bad";
             btn.disabled = false;
             btn.textContent = etykieta;
             inp.select();
           }
         }).catch(function(err){
-          msg.textContent = "Coś się wysypało przy pobieraniu prezentu: " + err.message + ". Odśwież stronę.";
+          msg.textContent = "Coś się wysypało przy pobieraniu kuponu: " + err.message + ". Odśwież stronę.";
           msg.className = "msg bad";
           btn.disabled = false;
           btn.textContent = etykieta;
@@ -834,34 +951,12 @@
     });
   }
 
-  /* ---------- strzelnica ---------- */
-  var licznikGlin = 0;
-
-  /* Sylwetka funkcjonariusza. Jesli jest zdjecie, wchodzi w miejsce twarzy
-     (przyciete do kola), a pod spodem i tak siedzi rysowana glowa - wiec
-     brakujacy plik nie psuje obrazka. */
-  function sylwetkaGliny(foto){
-    var uid = "twarz" + (++licznikGlin);
-    return '<svg viewBox="0 0 60 92" aria-hidden="true" focusable="false">' +
-      '<defs><clipPath id="' + uid + '"><circle cx="30" cy="27" r="15"/></clipPath></defs>' +
-      '<ellipse cx="30" cy="88" rx="17" ry="4" fill="rgba(0,0,0,.4)"/>' +
-      '<rect x="12" y="44" width="36" height="42" rx="9" fill="#1d3a73"/>' +
-      '<rect x="26" y="52" width="8" height="24" rx="2" fill="#0f2350"/>' +
-      '<circle cx="20" cy="56" r="3" fill="#ffd23f"/>' +
-      '<circle cx="30" cy="27" r="15" fill="#e8b08a"/>' +
-      (foto ? '<image href="' + foto + '" x="15" y="12" width="30" height="30" ' +
-              'preserveAspectRatio="xMidYMid slice" clip-path="url(#' + uid + ')"/>' : '') +
-      '<path d="M14 24a16 16 0 0 1 32 0z" fill="#16294f"/>' +
-      '<rect x="9" y="22" width="42" height="5" rx="2.5" fill="#0c1a34"/>' +
-      '<rect x="26" y="11" width="8" height="6" rx="1.5" fill="#ffd23f"/>' +
-      '</svg>';
-  }
-
-  function strzelnica(p, host){
-    var stan = {runda: 0, wybory: [], amunicja: 3, zajete: false};
+  /* ---------- strzelnica: jedna runda, wszyscy ---------- */
+  function strzelnica(def, host, ekran){
     var ILE_AMUNICJI = 3;
+    var stan = {amunicja: ILE_AMUNICJI, zostalo: def.cele.length, zajete: false};
 
-    host.appendChild(el("p", "quiet prose", p.intro));
+    host.appendChild(el("p", "quiet prose", def.intro));
 
     var pasek = el("div", "pasek-rundy");
     var info = el("span", null, "");
@@ -870,21 +965,18 @@
     pasek.appendChild(ammo);
     host.appendChild(pasek);
 
-    var pytanie = el("p", "runda-pytanie");
-    host.appendChild(pytanie);
-
     var scena = el("div", "scena");
     host.appendChild(scena);
 
-    var msg = document.getElementById("misja-" + p.id).querySelector(".msg");
+    var msg = ekran.querySelector(".msg");
 
+    function opis(){ info.textContent = "Zostało: " + stan.zostalo + " / " + def.cele.length; }
     function rysujAmmo(){
       ammo.textContent = "";
       for (var i = 0; i < ILE_AMUNICJI; i++){
         ammo.appendChild(el("i", i >= stan.amunicja ? "pusta" : null));
       }
     }
-
     function efekt(ev, klasa){
       var r = scena.getBoundingClientRect();
       var e = el("span", klasa);
@@ -893,7 +985,6 @@
       scena.appendChild(e);
       setTimeout(function(){ e.remove(); }, 1700);
     }
-
     function przeladuj(){
       stan.zajete = true;
       info.textContent = "Przeładowanie…";
@@ -901,22 +992,18 @@
         stan.amunicja = ILE_AMUNICJI;
         rysujAmmo();
         stan.zajete = false;
-        opisRundy();
-      }, 850);
+        opis();
+      }, 700);
     }
 
-    function opisRundy(){
-      info.textContent = "Runda " + (stan.runda + 1) + " / " + p.rundy.length;
-    }
-
-    function strzal(ev, glina, odp){
-      if (stan.zajete || zaliczone[p.id]) return;
+    function strzal(ev, cel){
+      if (stan.zajete || rozwiazane[def.id]) return;
       efekt(ev, "blysk");
       efekt(ev, "dziura");
       stan.amunicja--;
       rysujAmmo();
 
-      if (!glina){
+      if (!cel){
         scena.classList.remove("pudlo");
         void scena.offsetWidth;
         scena.classList.add("pudlo");
@@ -924,183 +1011,174 @@
         return;
       }
 
-      stan.zajete = true;
-      var g = glina.getBoundingClientRect(), s = scena.getBoundingClientRect();
-      glina.style.animation = "none";
-      glina.style.left = (g.left - s.left) + "px";
-      glina.style.transform = "none";
-      void glina.offsetWidth;
-      glina.classList.add("trafiony");
-      stan.wybory.push(odp);
+      var c = cel.getBoundingClientRect(), s = scena.getBoundingClientRect();
+      cel.style.animation = "none";
+      cel.style.left = (c.left - s.left) + "px";
+      cel.style.transform = "none";
+      void cel.offsetWidth;
+      cel.classList.add("trafiony");
+      cel.disabled = true;
+      stan.zostalo--;
+      opis();
 
-      setTimeout(function(){
-        stan.zajete = false;
-        stan.runda++;
-        if (stan.runda >= p.rundy.length){ rozliczenie(); }
-        else { rysujRunde(); }
-      }, 520);
+      if (stan.zostalo <= 0){ setTimeout(rozliczenie, 600); }
+      else if (stan.amunicja <= 0){ przeladuj(); }
     }
 
-    function rysujRunde(){
-      var r = p.rundy[stan.runda];
-      opisRundy();
-      pytanie.textContent = r.pytanie;
+    function rysuj(){
       scena.textContent = "";
+      var ilePasow = 3;
+      var pasy = [];
+      for (var i = 0; i < ilePasow; i++){
+        var pas = el("div", "pas");
+        pas.style.top = (2 + i * 32.5) + "%";
+        scena.appendChild(pas);
+        pasy.push(pas);
+      }
 
-      var pasy = [el("div", "pas gora"), el("div", "pas dol")];
-      scena.appendChild(pasy[0]);
-      scena.appendChild(pasy[1]);
+      def.cele.forEach(function(c, i){
+        var t = el("button", "cel");
+        t.type = "button";
+        t.setAttribute("aria-label", "Zestrzel cel " + (i + 1));
 
-      r.opcje.forEach(function(opcja, i){
-        var imie = (typeof opcja === "string") ? opcja : opcja.imie;
-        var foto = (typeof opcja === "string") ? null : opcja.foto;
-        var odp = imie;
-        var g = el("button", "glina");
-        g.type = "button";
-        g.setAttribute("aria-label", "Zestrzel: " + imie);
-        g.innerHTML = sylwetkaGliny(foto);
-        /* brak pliku ze zdjeciem -> zdejmujemy <image>, zostaje rysowana twarz */
-        Array.prototype.forEach.call(g.querySelectorAll("image"), function(im){
-          im.addEventListener("error", function(){ im.remove(); });
-        });
-        g.appendChild(el("span", "tabliczka", imie));
-        g.style.left = (i * 23) + "%";
-        g.style.setProperty("--tempo", (4.4 + i * 0.85).toFixed(2) + "s");
-        g.style.setProperty("--opoznienie", (-i * 1.6).toFixed(2) + "s");
-        g.style.animationDirection = (i % 2) ? "alternate-reverse" : "alternate";
-        g.addEventListener("click", function(ev){
-          ev.stopPropagation();
-          strzal(ev, g, odp);
-        });
-        pasy[i % 2].appendChild(g);
+        var fot = el("span", "fot");
+        var img = document.createElement("img");
+        img.src = c.foto;
+        img.alt = "";
+        img.addEventListener("error", function(){ fot.classList.add("brak"); img.remove(); });
+        fot.appendChild(img);
+        fot.appendChild(el("span", "pasek-policyjny"));
+        t.appendChild(fot);
+
+        t.style.left = (i % 2 ? 46 : 4) + "%";
+        t.style.setProperty("--tempo", (5.2 + i * 0.7).toFixed(2) + "s");
+        t.style.setProperty("--opoznienie", (-i * 1.9).toFixed(2) + "s");
+        t.style.animationDirection = (i % 2) ? "alternate-reverse" : "alternate";
+        t.addEventListener("click", function(ev){ ev.stopPropagation(); strzal(ev, t); });
+        pasy[i % ilePasow].appendChild(t);
       });
 
       stan.amunicja = ILE_AMUNICJI;
+      stan.zostalo = def.cele.length;
       rysujAmmo();
+      opis();
     }
 
     function rozliczenie(){
-      scena.textContent = "";
-      pytanie.textContent = "Liczę łup…";
       info.textContent = "";
       msg.textContent = "Sprawdzam…";
       msg.className = "msg";
-      var haslo = stan.wybory.join(" ");
-
-      sprobuj(p.enc, haslo).then(function(wynik){
+      sprobuj(def.enc, def.klucz).then(function(wynik){
         if (wynik){
-          zapiszPostep(p.id, haslo);
-          pytanie.textContent = "";
-          pokazNagrode(p, wynik, false);
+          zapiszPostep(def.id, def.klucz);
+          scena.remove();
+          pasek.remove();
+          pokazNagrode(def, wynik, false);
         } else {
-          overlay("Busted", "misja-" + p.id);
-          msg.textContent = "Któryś strzał poszedł w złego glinę. Pięć rund od nowa.";
+          msg.textContent = "Sejf nie puścił. Odśwież stronę i spróbuj raz jeszcze.";
           msg.className = "msg bad";
-          stan.runda = 0;
-          stan.wybory = [];
-          rysujRunde();
         }
       }).catch(function(err){
         msg.textContent = "Coś się wysypało: " + err.message + ". Odśwież stronę.";
         msg.className = "msg bad";
-        stan.runda = 0;
-        stan.wybory = [];
-        rysujRunde();
       });
     }
 
     scena.addEventListener("click", function(ev){
-      if (ev.target === scena || ev.target.classList.contains("pas")){ strzal(ev, null, null); }
+      if (ev.target === scena || ev.target.classList.contains("pas")){ strzal(ev, null); }
     });
 
-    rysujRunde();
+    rysuj();
   }
 
-  /* ---------- budowa kart ---------- */
-  function kartaMisji(p){
-    var sec = el("section", "card misja");
-    sec.id = "misja-" + p.id;
+  /* ---------- budowa ekranu etapu ---------- */
+  function zarejestrujEtap(def){
+    if (etapy.some(function(e){ return e.id === def.id; })) return;
+    etapy.push(def);
+
+    var ekran = el("section", "ekran");
+    ekran.id = "ekran-" + def.nr;
+
+    var karta = el("section", "card misja");
+    karta.id = "etap-" + def.id;
 
     var nag = el("div", "naglowek");
-    nag.appendChild(el("p", "kicker", "Misja " + p.nr + " · " + p.kryptonim));
-    nag.appendChild(el("span", "stawka", p.stawka + " zł"));
-    sec.appendChild(nag);
-    sec.appendChild(el("h2", null, p.tytul));
+    nag.appendChild(el("p", "kicker", "Etap " + def.nr + " · " + def.kryptonim));
+    karta.appendChild(nag);
+    karta.appendChild(el("h2", null, def.tytul));
 
     var tresc = el("div", "tresc");
-    sec.appendChild(tresc);
+    karta.appendChild(tresc);
 
     var msg = el("p", "msg");
     msg.setAttribute("role", "status");
     msg.setAttribute("aria-live", "polite");
-    sec.appendChild(msg);
+    karta.appendChild(msg);
 
-    if (p.stopka){
-      sec.appendChild(el("p", "quiet prose", p.stopka));
-    }
+    if (def.stopka){ karta.appendChild(el("p", "quiet prose", def.stopka)); }
 
     var nagroda = el("div", "nagroda");
     nagroda.hidden = true;
-    sec.appendChild(nagroda);
+    karta.appendChild(nagroda);
 
-    document.getElementById("misje").appendChild(sec);
+    ekran.appendChild(karta);
+    nawigacja(ekran, def.nr);
 
-    if (p.typ === "strzelnica"){ strzelnica(p, tresc); }
-    else { formularz(p, tresc); }
+    document.getElementById("ekrany").appendChild(ekran);
+    ekrany[def.nr] = ekran;
+
+    if (def.typ === "strzelnica"){ strzelnica(def, tresc, ekran); }
+    else { formularz(def, tresc, ekran); }
   }
 
-  function odswiezZamki(){
-    var otwarta = true;
-    POZIOMY.forEach(function(p){
-      var sec = document.getElementById("misja-" + p.id);
-      var masz = !!zaliczone[p.id];
-      var stary = sec.querySelector(".zamek");
-      if (masz || otwarta){
-        if (stary){ stary.remove(); }
-        sec.classList.remove("zamknieta");
-      } else if (!stary){
-        var z = el("div", "zamek");
-        z.appendChild(el("div", "ikona", "🔒"));
-        z.appendChild(el("div", "tekst", "Zablokowane — zalicz misję " + (p.nr - 1)));
-        sec.classList.add("zamknieta");
-        sec.appendChild(z);
-      }
-      if (!masz){ otwarta = false; }
-    });
+  /* Tresc planszy koncowej przyjezdza w ostatniej paczce - w zrodle strony
+     jej nie ma, zeby nie podpowiadala odpowiedzi z ostatniego etapu. */
+  function zbudujFinisz(dane){
+    if (ekrany[ILE_ETAPOW + 1]) return;
+    dane = dane || {};
+    var ekran = el("section", "ekran");
+    ekran.id = "ekran-finisz";
+    var karta = el("section", "card");
+    karta.id = "finisz";
+    karta.appendChild(el("p", "kicker", dane.kicker || "100% completion"));
+    karta.appendChild(el("div", "wielkie", dane.tytul || "Koniec"));
+    karta.appendChild(el("p", "prose", dane.tekst || "Wszystkie etapy zaliczone."));
+    ekran.appendChild(karta);
+    nawigacja(ekran, ILE_ETAPOW + 1);
+    document.getElementById("ekrany").appendChild(ekran);
+    ekrany[ILE_ETAPOW + 1] = ekran;
   }
 
   /* ---------- start ---------- */
   function start(){
-    POZIOMY.forEach(kartaMisji);
-    odswiezHud(null);
-    odswiezZamki();
+    ekrany[0] = document.getElementById("ekran-0");
+    document.getElementById("zaczynamy").addEventListener("click", function(){ pokazEkran(1); });
+
+    zarejestrujEtap(ETAP_1);
+    odswiezHud();
 
     if (!window.crypto || !crypto.subtle){
-      POZIOMY.forEach(function(p){
-        var sec = document.getElementById("misja-" + p.id);
-        var msg = sec.querySelector(".msg");
-        msg.textContent = "Ta przeglądarka nie umie odszyfrować pliku. Odpal stronę po https.";
-        msg.className = "msg bad";
-        var b = sec.querySelector("button[type=submit]");
-        if (b){ b.disabled = true; }
-      });
+      var msg = ekrany[1].querySelector(".msg");
+      msg.textContent = "Ta przeglądarka nie umie odszyfrować pliku. Odpal stronę po https.";
+      msg.className = "msg bad";
+      var b = ekrany[1].querySelector("button[type=submit]");
+      if (b){ b.disabled = true; }
       return;
     }
 
-    /* odzyskanie postepu z poprzedniej wizyty */
+    /* odzyskanie postepu: lancuch odtwarzamy po kolei */
     var postep = wczytajPostep();
-    var doOdzyskania = POZIOMY.filter(function(p){ return postep[p.id]; });
     (function kolejny(i){
-      if (i >= doOdzyskania.length) return;
-      var p = doOdzyskania[i];
-      sprobuj(p.enc, postep[p.id]).then(function(wynik){
+      var def = etapy[i];
+      if (!def || !postep[def.id]) return;
+      sprobuj(def.enc, postep[def.id]).then(function(wynik){
         if (wynik){
-          pokazNagrode(p, wynik, true);
-          var inp = document.getElementById("input-" + p.id);
-          if (inp){ inp.disabled = true; inp.value = postep[p.id]; }
+          pokazNagrode(def, wynik, true);
+          var inp = document.getElementById("input-" + def.id);
+          if (inp){ inp.disabled = true; inp.value = postep[def.id]; }
+          kolejny(i + 1);
         }
-        kolejny(i + 1);
-      }).catch(function(){ kolejny(i + 1); });
+      }).catch(function(){});
     })(0);
   }
 

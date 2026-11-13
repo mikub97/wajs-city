@@ -1,56 +1,59 @@
 # Wajs City
 
-Jednostronicowa gra-prezent: cztery misje w stylistyce GTA, za każdą jeden kupon PlayStation.
-Razem 350 zł (50 + 100 + 100 + 100).
+Gra-prezent w stylu GTA: kolaż na wejściu, potem cztery etapy, każdy na osobnym ekranie.
+Za każdy zaliczony etap jeden kupon PlayStation.
 
-## Jak to jest zabezpieczone
+## Łańcuch, nie lista
 
-Kupony nie leżą tu jawnie. Każdy siedzi w osobnym pliku zaszyfrowanym **AES-256-GCM**, a klucz
-powstaje z odpowiedzi gracza przez **PBKDF2-HMAC-SHA256** (150 000 iteracji, losowa sól).
-Odszyfrowanie dzieje się dopiero w przeglądarce, przez WebCrypto. Na serwerze nie ma ani haseł,
-ani ich hashy — poprawność weryfikuje sam tag GCM, więc **strona nie zna odpowiedzi** i nie da się
-ich wyczytać z kodu.
+W źródle strony jest **tylko pierwszy etap**. Definicja każdego kolejnego — pytanie, cele
+strzelnicy, ścieżka do jego paczki, a gdy trzeba także jego klucz — siedzi w zaszyfrowanej
+paczce etapu poprzedniego. Tak samo plansza końcowa. Nie da się więc podejrzeć, co dalej,
+ani przeskoczyć etapu: żeby dostać etap N+1, trzeba rozwiązać etap N.
+
+Każda paczka to **AES-256-GCM**, klucz z odpowiedzi gracza przez **PBKDF2-HMAC-SHA256**
+(150 000 iteracji, losowa sól). Odszyfrowanie dzieje się w przeglądarce (WebCrypto).
+Na serwerze nie ma ani haseł, ani ich hashy — poprawność weryfikuje tag GCM, więc strona
+nie zna odpowiedzi.
 
 ```
-assets/poziom-N.enc:  "WAJS1" (5 B) | sól (16 B) | IV (12 B) | szyfrogram + tag
-po odszyfrowaniu:     nagłówek JSON | 0x0A | bajty PDF-a
+assets/etap-N.enc:  "WAJS1" (5 B) | sól (16 B) | IV (12 B) | szyfrogram + tag
+po odszyfrowaniu:   nagłówek JSON | 0x0A | bajty PDF-a
+nagłówek:           {kod, plik, typ, nastepny: {...definicja kolejnego etapu...}, finisz?}
 ```
 
-Hasło jest kanonizowane po obu stronach tak samo (`canonical()` w `tools/encrypt.py`
+Hasło jest kanonizowane po obu stronach tak samo (`canonical()` w `tools/zbuduj_lancuch.py`
 i `normalizuj()` w `index.html`): zostają wyłącznie znaki `[a-z0-9]`, więc wielkość liter,
 spacje, interpunkcja i polskie ogonki nie mają znaczenia.
 
-## Misje
+## Etapy
 
-| # | Stawka | Mechanika | Skąd bierze się hasło |
-|---|---|---|---|
-| 1 | 100 zł | pytanie otwarte | to, co gracz wpisze |
-| 2 | 50 zł | pytanie otwarte | to, co gracz wpisze |
-| 3 | 100 zł | strzelnica — 5 rund, w każdej 4 patrolujących funkcjonariuszy | sklejone imiona pięciu trafionych |
-| 4 | 100 zł | pytanie otwarte | to, co gracz wpisze |
+| # | Mechanika | Skąd bierze się klucz |
+|---|---|---|
+| 1 | pytanie otwarte | to, co gracz wpisze |
+| 2 | pytanie otwarte | to, co gracz wpisze |
+| 3 | strzelnica — jedna runda, cała ekipa na placu, trzeba ustrzelić wszystkich | klucz przyjeżdża w paczce etapu 2 |
+| 4 | pytanie otwarte | to, co gracz wpisze |
 
-Twarze funkcjonariuszy biorą się ze zdjęć w `assets/ziomki/`. Brakujący plik nie psuje
-obrazka — pod spodem siedzi rysowana głowa.
+Strzelnicy nie broni hasło, tylko sama gra: klucz jest w paczce poprzedniego etapu, więc nie
+widać go w źródle, ale kto przejdzie etap 2, technicznie go ma. Dlatego siedzi tam najmniejszy
+kupon. Twarze celów biorą się z `assets/ziomki/*.jpg`; brakujący plik nie psuje obrazka.
 
-Minigra jest **sposobem wpisywania hasła**, nie bramką: sam fakt „wygranej" w JS niczego nie
-odblokowuje, bo kupon i tak trzeba odszyfrować. Dlatego strzelnica ma pięć rund — przy jednej
-rundzie cztery opcje oznaczałyby 25% na ślepo.
+## Przebudowa łańcucha
 
-## Podmiana pytań i kuponów
-
-Treść misji siedzi w tablicy `POZIOMY` na początku skryptu w `index.html`.
-Po zmianie odpowiedzi trzeba przeszyfrować dany kupon:
+Treść i hasła siedzą w `lancuch.json` — **plik zostaje lokalnie, nigdy w repo** (`.gitignore`).
 
 ```bash
-python3 tools/make_payload.py kupon.pdf KOD-Z-KUPONU /tmp/p.bin
-python3 tools/encrypt.py /tmp/p.bin assets/poziom-2.enc          # zapyta o hasło
-python3 tools/encrypt.py --check assets/poziom-2.enc /tmp/p.bin  # round-trip
+python3 tools/zbuduj_lancuch.py lancuch.json
 ```
 
-Dla strzelnicy hasłem jest ciąg imion trafionych w kolejności rund, np.
-`"Jan I Jan V Jan II Jan III Jan VII"` — **dokładnie takich, jakie stoją na tabliczkach**.
+Builder odmawia pracy, jeśli dwa kupony mają ten sam kod. `tools/atrapa_pdf.py` generuje
+PDF-atrapę do testów, zanim pojawią się prawdziwe kupony.
 
-`tools/atrapa_pdf.py` generuje podmieniony PDF do testów, zanim pojawią się prawdziwe kupony.
+## Testy
 
-Jawne PDF-y i oryginalne materiały nie wchodzą do repozytorium (`.gitignore`).
+```bash
+node test-lancuch.mjs    # jsdom: cały łańcuch, strzelnica, pamięć postępu, brak wycieków
+```
+
+Jawne PDF-y, wideo, oryginały zdjęć i `lancuch.json` nie wchodzą do repozytorium.
 Strona wymaga `https://` (albo `localhost`) — WebCrypto nie działa z `file://`.

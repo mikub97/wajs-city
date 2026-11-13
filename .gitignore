@@ -14,3 +14,9 @@ image.png
 ._*
 __pycache__/
 *.pyc
+
+# Spis etapow z haslami - zostaje na dysku, nigdy w repo
+lancuch.json
+
+# Oryginaly zdjec ekipy - do repo ida tylko przyciete .jpg
+assets/ziomki/*.png
