@@ -696,7 +696,7 @@
     var dane = plain.slice(nl + 1);
     return {
       kod: meta.kod,
-      plik: meta.plik || "kupon.pdf",
+      plik: meta.plik || "nagroda.pdf",
       nastepny: meta.nastepny || null,
       finisz: meta.finisz || null,
       url: URL.createObjectURL(new Blob([dane], {type: meta.typ || "application/pdf"}))
@@ -812,7 +812,7 @@
     box.textContent = "";
     box.hidden = false;
 
-    box.appendChild(el("p", "kicker", "Mission passed · kupon " + def.nr));
+    box.appendChild(el("p", "kicker", "Mission passed · nagroda " + def.nr));
     box.appendChild(el("div", "code", wynik.kod));
 
     var akcje = el("div", "actions");
@@ -848,7 +848,7 @@
 
     var ramka = el("div", "pdfbox");
     var ifr = document.createElement("iframe");
-    ifr.title = "Kupon " + def.nr;
+    ifr.title = "Nagroda " + def.nr;
     ifr.src = wynik.url;
     ramka.appendChild(ifr);
     box.appendChild(ramka);
@@ -863,7 +863,7 @@
       setTimeout(function(){ plansza.classList.remove("on"); }, 1800);
     }
 
-    /* kolejny etap przyjechal razem z kuponem */
+    /* kolejny etap przyjechal razem z nagroda */
     if (wynik.nastepny){ zarejestrujEtap(wynik.nastepny); }
     else { zbudujFinisz(wynik.finisz); }
 
@@ -940,7 +940,7 @@
             inp.select();
           }
         }).catch(function(err){
-          msg.textContent = "Coś się wysypało przy pobieraniu kuponu: " + err.message + ". Odśwież stronę.";
+          msg.textContent = "Coś się wysypało przy pobieraniu nagrody: " + err.message + ". Odśwież stronę.";
           msg.className = "msg bad";
           btn.disabled = false;
           btn.textContent = etykieta;
