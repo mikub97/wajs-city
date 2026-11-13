@@ -976,7 +976,7 @@
 
   /* Huk ze strzelby: szeroki, niski i dlugi. Trzy warstwy -
      sucha detonacja, dudniacy ogon i niskie kopniecie w piers. */
-  function dzwiekStrzalu(){
+  function syntezaStrzalu(){
     var a = kontekst();
     if (!a) return;
     var t = a.currentTime;
@@ -1026,11 +1026,52 @@
     osc.start(t); osc.stop(t + 0.32);
   }
 
+  /* Prawdziwa probka strzalu; synteza zostaje jako zapas, gdyby plik
+     sie nie wczytal albo nie zdazyl sie zdekodowac przed pierwszym strzalem. */
+  var PLIK_STRZALU = "assets/strzal.mp3";
+  var buforStrzalu = null, dekodowanie = false;
+
+  function wczytajStrzal(){
+    var a = kontekst();
+    if (!a || buforStrzalu || dekodowanie) return;
+    dekodowanie = true;
+    fetch(PLIK_STRZALU).then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.arrayBuffer();
+    }).then(function(buf){
+      return new Promise(function(ok, zle){
+        var wynik = a.decodeAudioData(buf, ok, zle);
+        if (wynik && wynik.then){ wynik.then(ok, zle); }
+      });
+    }).then(function(dekod){
+      buforStrzalu = dekod;
+    }).catch(function(){
+      dekodowanie = false;   /* zostaje synteza */
+    });
+  }
+
+  function dzwiekStrzalu(){
+    var a = kontekst();
+    if (!a) return;
+    if (!buforStrzalu){
+      wczytajStrzal();
+      syntezaStrzalu();
+      return;
+    }
+    var zrodlo = a.createBufferSource();
+    zrodlo.buffer = buforStrzalu;
+    var g = a.createGain();
+    g.gain.value = 0.7;   /* probka jest w pelnej skali, a strzaly moga sie nakladac */
+    zrodlo.connect(g); g.connect(a.destination);
+    zrodlo.start(a.currentTime);
+  }
+
   /* ---------- strzelnica: jedna runda, wszyscy ---------- */
   function strzelnica(def, host, ekran){
     var ILE_AMUNICJI = 3;
     var stan = {amunicja: ILE_AMUNICJI, zostalo: def.cele.length, zajete: false};
 
+    wczytajStrzal();
     host.appendChild(el("p", "quiet prose", def.intro));
 
     var pasek = el("div", "pasek-rundy");

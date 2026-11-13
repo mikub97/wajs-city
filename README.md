@@ -55,5 +55,11 @@ PDF-atrapę do testów, zanim pojawią się prawdziwe kupony.
 node test-lancuch.mjs    # jsdom: cały łańcuch, strzelnica, pamięć postępu, brak wycieków
 ```
 
+## Dźwięk
+
+`assets/strzal.mp3` to próbka wystrzału (Freesound Community via Pixabay, CC0). Odtwarzana przez
+WebAudio, żeby kolejne strzały mogły się nakładać bez opóźnienia. Gdyby plik się nie wczytał,
+`syntezaStrzalu()` generuje huk z szumu i niskiego tonu — gra nie zostaje bez dźwięku.
+
 Jawne PDF-y, wideo, oryginały zdjęć i `lancuch.json` nie wchodzą do repozytorium.
 Strona wymaga `https://` (albo `localhost`) — WebCrypto nie działa z `file://`.
