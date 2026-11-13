@@ -22,12 +22,15 @@ spacje, interpunkcja i polskie ogonki nie mają znaczenia.
 
 ## Misje
 
-| # | Mechanika | Skąd bierze się hasło |
-|---|---|---|
-| 1 | pytanie otwarte | to, co gracz wpisze |
-| 2 | strzelnica — 5 rund, w każdej 4 patrolujących glin z tabliczkami | sklejone odpowiedzi z pięciu rund |
-| 3 | cheat code | wstukane słowo |
-| 4 | pytanie otwarte | to, co gracz wpisze |
+| # | Stawka | Mechanika | Skąd bierze się hasło |
+|---|---|---|---|
+| 1 | 100 zł | pytanie otwarte | to, co gracz wpisze |
+| 2 | 50 zł | pytanie otwarte | to, co gracz wpisze |
+| 3 | 100 zł | strzelnica — 5 rund, w każdej 4 patrolujących funkcjonariuszy | sklejone imiona pięciu trafionych |
+| 4 | 100 zł | pytanie otwarte | to, co gracz wpisze |
+
+Twarze funkcjonariuszy biorą się ze zdjęć w `assets/ziomki/`. Brakujący plik nie psuje
+obrazka — pod spodem siedzi rysowana głowa.
 
 Minigra jest **sposobem wpisywania hasła**, nie bramką: sam fakt „wygranej" w JS niczego nie
 odblokowuje, bo kupon i tak trzeba odszyfrować. Dlatego strzelnica ma pięć rund — przy jednej
@@ -44,8 +47,8 @@ python3 tools/encrypt.py /tmp/p.bin assets/poziom-2.enc          # zapyta o has�
 python3 tools/encrypt.py --check assets/poziom-2.enc /tmp/p.bin  # round-trip
 ```
 
-Dla strzelnicy hasłem jest ciąg poprawnych odpowiedzi w kolejności rund, np.
-`"Tommy Vercetti 1986 V-Rock sześć Malibu Club"` — **dokładnie takich, jakie są na tabliczkach**.
+Dla strzelnicy hasłem jest ciąg imion trafionych w kolejności rund, np.
+`"Jan I Jan V Jan II Jan III Jan VII"` — **dokładnie takich, jakie stoją na tabliczkach**.
 
 `tools/atrapa_pdf.py` generuje podmieniony PDF do testów, zanim pojawią się prawdziwe kupony.
 
