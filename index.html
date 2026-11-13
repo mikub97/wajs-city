@@ -951,6 +951,57 @@
     });
   }
 
+  /* ---------- dzwiek wystrzalu (syntezowany, zero plikow) ---------- */
+  var ac = null, szum = null;
+
+  function kontekst(){
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      if (!ac) ac = new AC();
+      if (ac.state === "suspended") ac.resume();
+      return ac;
+    } catch (e) { return null; }
+  }
+
+  function dzwiekStrzalu(){
+    var a = kontekst();
+    if (!a) return;
+    var t = a.currentTime;
+
+    /* trzask: szum bialy z szybko opadajaca obwiednia */
+    if (!szum){
+      var dlugosc = Math.floor(a.sampleRate * 0.3);
+      szum = a.createBuffer(1, dlugosc, a.sampleRate);
+      var dane = szum.getChannelData(0);
+      for (var i = 0; i < dlugosc; i++){
+        dane[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / dlugosc, 3.2);
+      }
+    }
+    var zrodlo = a.createBufferSource();
+    zrodlo.buffer = szum;
+    var filtr = a.createBiquadFilter();
+    filtr.type = "lowpass";
+    filtr.frequency.setValueAtTime(3400, t);
+    filtr.frequency.exponentialRampToValueAtTime(360, t + 0.22);
+    var wzmak = a.createGain();
+    wzmak.gain.setValueAtTime(0.5, t);
+    wzmak.gain.exponentialRampToValueAtTime(0.0008, t + 0.26);
+    zrodlo.connect(filtr); filtr.connect(wzmak); wzmak.connect(a.destination);
+    zrodlo.start(t); zrodlo.stop(t + 0.3);
+
+    /* kopniecie: krotki zjazd niskiego tonu */
+    var osc = a.createOscillator();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(150, t);
+    osc.frequency.exponentialRampToValueAtTime(44, t + 0.11);
+    var wzmak2 = a.createGain();
+    wzmak2.gain.setValueAtTime(0.45, t);
+    wzmak2.gain.exponentialRampToValueAtTime(0.0008, t + 0.14);
+    osc.connect(wzmak2); wzmak2.connect(a.destination);
+    osc.start(t); osc.stop(t + 0.16);
+  }
+
   /* ---------- strzelnica: jedna runda, wszyscy ---------- */
   function strzelnica(def, host, ekran){
     var ILE_AMUNICJI = 3;
@@ -998,6 +1049,7 @@
 
     function strzal(ev, cel){
       if (stan.zajete || rozwiazane[def.id]) return;
+      dzwiekStrzalu();
       efekt(ev, "blysk");
       efekt(ev, "dziura");
       stan.amunicja--;
