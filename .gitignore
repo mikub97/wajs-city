@@ -1,0 +1,16 @@
+# Jawny kupon NIGDY nie wchodzi do repo
+*.pdf
+*.mp4
+
+# Oryginalne, nieprzetworzone materiały (do repo ida tylko kopie w assets/)
+20260809_214118.jpg
+Gemini_Generated_Image_*.jpeg
+vice city.jpg
+image.png
+/urodziny.jpg
+
+# Smieci
+.DS_Store
+._*
+__pycache__/
+*.pyc
