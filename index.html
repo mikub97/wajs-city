@@ -1142,7 +1142,7 @@
     karta.id = "finisz";
     karta.appendChild(el("p", "kicker", dane.kicker || "100% completion"));
     karta.appendChild(el("div", "wielkie", dane.tytul || "Koniec"));
-    karta.appendChild(el("p", "prose", dane.tekst || "Wszystkie etapy zaliczone."));
+    if (dane.tekst){ karta.appendChild(el("p", "prose", dane.tekst)); }
     ekran.appendChild(karta);
     nawigacja(ekran, ILE_ETAPOW + 1);
     document.getElementById("ekrany").appendChild(ekran);

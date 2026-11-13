@@ -139,6 +139,7 @@ const gwiazdki = (w) => [...w.document.querySelectorAll("#gwiazdki i")].map(g =>
   check("  cztery gwiazdki", gwiazdki(w) === "****", gwiazdki(w));
   check("  ekran finiszu zbudowany", !!w.document.getElementById("finisz"));
   check("  z napisem końcowym", w.document.querySelector("#finisz .wielkie").textContent === "No to jazda z Janami!");
+  check("  i bez dopisku o etapach", !w.document.getElementById("finisz").textContent.includes("cztery kupony"), w.document.getElementById("finisz").textContent.trim());
 
   const kody = [...w.document.querySelectorAll(".code")].map(c => c.textContent);
   check("cztery różne kody", new Set(kody).size === 4 && kody.length === 4, kody.join(","));
