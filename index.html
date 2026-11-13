@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WAJS CITY</title>
-<meta name="description" content="Prezent urodzinowy dla Antona. Cztery misje dzielą cię od odbioru.">
+<meta name="description" content="Cztery misje, cztery kupony do odblokowania.">
 <meta property="og:title" content="WAJS CITY">
-<meta property="og:description" content="Wszystkiego najlepszego, Anton. Cztery misje, cztery kupony, 350 zł do odbioru.">
+<meta property="og:description" content="Cztery misje, cztery kupony, 350 zł do odbioru.">
 <meta property="og:image" content="https://mikub97.github.io/wajs-city/assets/anton.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -216,6 +216,9 @@
     .pdfbox{display:none;}
     .pdf-hint{display:block;}
   }
+  ul.zasady{font-family:system-ui,sans-serif;line-height:1.6;padding-left:20px;margin:0 0 14px;}
+  ul.zasady li{margin-bottom:8px;font-size:clamp(15px,2.1vw,17px);}
+  ul.zasady strong{color:var(--gold);}
   ol.howto{font-family:system-ui,sans-serif;line-height:1.6;padding-left:22px;}
   ol.howto li{margin-bottom:6px;}
 
@@ -433,14 +436,17 @@
   </section>
 
   <section class="card prose">
-    <p class="kicker">Komunikat</p>
-    <h2>Wszystkiego najlepszego</h2>
-    <p><strong>„Wajs City"</strong> to nie żadna gra i nigdy jej nie było &mdash; to tylko podpis pod fotką.
-      Prezent jest prozaiczny: <span class="hl">350 zł na konto PlayStation</span>, w czterech kuponach.</p>
-    <p>Na GTA w końcu starczy. Tylko że nie dostaniesz wszystkiego naraz &mdash; każdy kupon siedzi za osobną
-      robotą. Cztery misje, cztery gwiazdki poszukiwania. Twoja decyzja, twoje miasto.</p>
-    <p class="quiet">Kupony leżą tu zaszyfrowane. Strona jest publiczna, więc każdy odblokujesz dopiero
-      poprawną odpowiedzią &mdash; nic nie da zaglądanie w kod.</p>
+    <p class="kicker">Zasady</p>
+    <h2>Robota</h2>
+    <ul class="zasady">
+      <li><strong>Cztery misje.</strong> Każda zamknięta na jedną odpowiedź.</li>
+      <li><strong>Za zaliczoną misję: gwiazdka i kupon PlayStation.</strong> Razem 350 zł.</li>
+      <li><strong>Po kolei.</strong> Następna misja otwiera się dopiero po poprzedniej.</li>
+      <li><strong>Prób bez limitu.</strong> Wielkość liter, spacje i przecinki nie mają znaczenia.</li>
+      <li><strong>Pudło to WASTED.</strong> Nic poza tym — wracasz i próbujesz dalej.</li>
+    </ul>
+    <p class="quiet">Kupony leżą tu zaszyfrowane, a strona nie zna odpowiedzi — sprawdza je dopiero
+      przy odszyfrowaniu. Zaglądanie w kod nic nie da.</p>
   </section>
 
   <div id="misje"></div>
@@ -459,10 +465,10 @@
   <section class="card" id="finisz" hidden>
     <p class="kicker">100% completion</p>
     <div class="wielkie">No to jazda z Janami!</div>
-    <p class="prose">Cztery misje, cztery gwiazdki, <strong>350 zł</strong> na koncie. Idź kupić tę grę.</p>
+    <p class="prose">Cztery misje, cztery gwiazdki, <strong>350 zł</strong> na koncie.</p>
   </section>
 
-  <footer>Wajs City &middot; zrobione ręcznie dla Antona</footer>
+  <footer>Wajs City</footer>
 </div>
 
 <div id="wasted" aria-hidden="true"><span>Wasted</span></div>
@@ -1029,10 +1035,6 @@
     msg.setAttribute("aria-live", "polite");
     sec.appendChild(msg);
 
-    if (p.typ !== "strzelnica"){
-      sec.appendChild(el("p", "quiet prose",
-        "Prób jest nieskończenie wiele. Wielkość liter, spacje i przecinki nie mają znaczenia."));
-    }
     if (p.stopka){
       sec.appendChild(el("p", "quiet prose", p.stopka));
     }
